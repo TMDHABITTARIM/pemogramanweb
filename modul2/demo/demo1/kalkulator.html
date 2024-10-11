@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+
+        .calculator {
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 20px;
+            background: linear-gradient(145deg, #e6e6e6, #ffffff);
+            box-shadow: 10px 10px 20px #c7c7c7, -10px -10px 20px #ffffff;
+            width: 320px;
+        }
+
+        #result {
+            width: 91%;
+            height: 70px;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: right;
+            border: none;
+            padding: 15px;
+            background-color: #2e3a4f;
+            color: white;
+            border-radius: 25px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 12px;
+            background-color: #2e3a4f;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #3b4a66;
+        }
+
+        button:nth-child(4n) {
+            background-color: #8f87ff;
+        }
+
+        button:nth-child(4n):hover {
+            background-color: #6f67ff;
+        }
+
+        button:nth-child(17) {
+            background-color: #ff6347;
+        }
+
+        button:nth-child(17):hover {
+            background-color: #ff453a;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="result" disabled>
+        <div class="buttons">
+            <button onclick="clearDisplay()">AC</button>
+            <button onclick="appendToDisplay('**')">^</button>
+            <button onclick="appendToDisplay('%')">%</button>
+            <button onclick="appendToDisplay('/')">÷</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('*')">×</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')">−</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('+')">+</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let result = document.getElementById('result');
+
+        // Fungsi untuk menambahkan angka atau simbol ke display
+        function appendToDisplay(value) {
+            result.value += value;
+        }
+
+        // Fungsi untuk menghitung hasil dari operasi yang ada di display
+        function calculateResult() {
+            try {
+                result.value = eval(result.value);
+            } catch (error) {
+                result.value = 'Error';
+            }
+        }
+
+        // Fungsi untuk membersihkan display
+        function clearDisplay() {
+            result.value = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App - Modern Design</title>
+    <style>
+        /* Mengatur dasar layout dan latar belakang */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #5d0aec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Desain container utama */
+        .todo-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        /* Desain input dan tombol */
+        input {
+            width: 80%;
+            padding: 12px;
+            border: 2px solid #dcdcdc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            outline: none;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #7d5fff;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #7d5fff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5a3ec8;
+        }
+
+        /* Desain untuk daftar */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background-color: #d0cfcf;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        li:hover {
+            background-color: #7d5fff;
+        }
+
+        /* Tombol hapus */
+        li button {
+            background-color: #ff6b6b;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        li button:hover {
+            background-color: #ff3b3b;
+        }
+
+        /* Mengatur teks kosong */
+        .empty-text {
+            color: #a0a0a0;
+            font-size: 14px;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h2>My To-Do List</h2>
+        <input type="text" id="todo-input" placeholder="Enter your task...">
+        <button id="add-button">Add Task</button>
+
+        <ul id="todo-list"></ul>
+        <p id="empty-message" class="empty-text">No tasks added yet.</p>
+    </div>
+
+    <script>
+        // Fungsi untuk menyimpan data ke localStorage
+        function saveToLocalStorage(todos) {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        // Fungsi untuk mendapatkan data dari localStorage
+        function getFromLocalStorage() {
+            let storedTodos = localStorage.getItem('todos');
+            if (storedTodos) {
+                return JSON.parse(storedTodos);
+            } else {
+                return [];
+            }
+        }
+
+        // Fungsi untuk menampilkan todo list dari localStorage
+        function displayTodos() {
+            let todos = getFromLocalStorage();
+            let ul = document.getElementById('todo-list');
+            let emptyMessage = document.getElementById('empty-message');
+            ul.innerHTML = '';  // Bersihkan daftar sebelum menampilkan ulang
+
+            if (todos.length === 0) {
+                emptyMessage.style.display = 'block';  // Tampilkan pesan jika tidak ada data
+            } else {
+                emptyMessage.style.display = 'none';  // Sembunyikan pesan jika ada data
+            }
+
+            todos.forEach(function(todo, index) {
+                let li = document.createElement('li');
+                let text = document.createTextNode(todo);
+
+                // Buat tombol hapus
+                let deleteButton = document.createElement('button');
+                deleteButton.innerHTML = 'Delete';
+                deleteButton.onclick = function() {
+                    removeTodo(index);
+                };
+
+                li.appendChild(text);
+                li.appendChild(deleteButton);
+                ul.appendChild(li);
+            });
+        }
+
+        // Fungsi untuk menambahkan todo baru
+        function addTodo() {
+            let inputValue = document.getElementById('todo-input').value;
+            if (inputValue === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            let todos = getFromLocalStorage();
+            todos.push(inputValue);
+            saveToLocalStorage(todos);
+
+            displayTodos();
+            document.getElementById('todo-input').value = "";  // Kosongkan input setelah menambahkan
+        }
+
+        // Fungsi untuk menghapus todo berdasarkan index
+        function removeTodo(index) {
+            let todos = getFromLocalStorage();
+            todos.splice(index, 1);  // Hapus todo pada index tertentu
+            saveToLocalStorage(todos);
+
+            displayTodos();  // Tampilkan ulang daftar setelah penghapusan
+        }
+
+        // Event listener untuk tombol "Add"
+        document.getElementById('add-button').addEventListener('click', addTodo);
+
+        // Tampilkan todo list saat halaman dimuat
+        window.onload = function() {
+            displayTodos();
+        };
+    </script>
+</body>
+</html>
