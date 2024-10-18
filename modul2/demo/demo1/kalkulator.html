@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stylish Calculator</title>
     <style>
+
         body {
             display: flex;
             justify-content: center;
@@ -15,7 +16,7 @@
 
         .calculator {
             border: 1px solid #ccc;
-            border-radius: 20px;
+            border-radius: 50px;
             padding: 20px;
             background: linear-gradient(145deg, #e6e6e6, #ffffff);
             box-shadow: 10px 10px 20px #c7c7c7, -10px -10px 20px #ffffff;
@@ -24,14 +25,14 @@
 
         #result {
             width: 91%;
-            height: 70px;
+            height: 50px;
             font-size: 2rem;
             margin-bottom: 15px;
             text-align: right;
             border: none;
             padding: 15px;
             background-color: #2e3a4f;
-            color: white;
+            color: #ff6347;
             border-radius: 25px;
         }
 
@@ -55,7 +56,7 @@
         }
 
         button:hover {
-            background-color: #3b4a66;
+            background-color: #babac0;
         }
 
         button:nth-child(4n) {
@@ -63,7 +64,27 @@
         }
 
         button:nth-child(4n):hover {
-            background-color: #6f67ff;
+            background-color: #babac0;
+        }
+
+        /* Ubah warna tombol AC menjadi #ff6347 */
+        button:nth-child(1) {
+            background-color: #ff6347;
+        }
+
+        button:nth-child(1):hover {
+            background-color: #babac0;
+        }
+
+        /* Ubah warna tombol ^ dan % */
+        button:nth-child(2),
+        button:nth-child(3) {
+            background-color: #8f87ff;
+        }
+
+        button:nth-child(2):hover,
+        button:nth-child(3):hover {
+            background-color: #babac0;
         }
 
         button:nth-child(17) {
@@ -71,7 +92,7 @@
         }
 
         button:nth-child(17):hover {
-            background-color: #ff453a;
+            background-color: #babac0;
         }
     </style>
 </head>

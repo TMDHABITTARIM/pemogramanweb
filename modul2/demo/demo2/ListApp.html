@@ -80,7 +80,7 @@
             background-color: #7d5fff;
         }
 
-        /* Tombol hapus */
+        /* Tombol hapus dan edit */
         li button {
             background-color: #ff6b6b;
             border: none;
@@ -89,6 +89,15 @@
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+
+        li button.edit-btn {
+            background-color: #ffa502;
+        }
+
+        li button.edit-btn:hover {
+            background-color: #e58e26;
         }
 
         li button:hover {
@@ -148,6 +157,14 @@
                 let li = document.createElement('li');
                 let text = document.createTextNode(todo);
 
+                // Buat tombol edit
+                let editButton = document.createElement('button');
+                editButton.innerHTML = 'Edit';
+                editButton.classList.add('edit-btn');
+                editButton.onclick = function() {
+                    editTodo(index, todo);
+                };
+
                 // Buat tombol hapus
                 let deleteButton = document.createElement('button');
                 deleteButton.innerHTML = 'Delete';
@@ -156,6 +173,7 @@
                 };
 
                 li.appendChild(text);
+                li.appendChild(editButton);
                 li.appendChild(deleteButton);
                 ul.appendChild(li);
             });
@@ -184,6 +202,20 @@
             saveToLocalStorage(todos);
 
             displayTodos();  // Tampilkan ulang daftar setelah penghapusan
+        }
+
+        // Fungsi untuk mengedit todo
+        function editTodo(index, currentValue) {
+            let newValue = prompt("Edit your task:", currentValue);
+            if (newValue === null || newValue === "") {
+                return;  // Jika user membatalkan atau input kosong
+            }
+
+            let todos = getFromLocalStorage();
+            todos[index] = newValue;  // Update nilai todo
+            saveToLocalStorage(todos);
+
+            displayTodos();  // Tampilkan ulang daftar setelah edit
         }
 
         // Event listener untuk tombol "Add"
